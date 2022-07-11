@@ -1,9 +1,9 @@
 <template>
   <div :class="field.size || 'w-full'">
-    <FieldWrapper :stacked="field.stacked" v-if="field.visible">
+    <FieldWrapper :stacked="field.stacked" v-if="field.visible" :style="{ 'border-style': 'solid' }">
       <div class="px-6 md:px-8 mt-2 md:mt-0" :class="field.stacked ? 'md:pt-2 w-full' : 'w-full md:w-1/5 md:py-5'">
         <slot>
-          <FormLabel :label-for="labelFor || field.uniqueKey" :class="{ 'mb-2': shouldShowHelpText }">
+          <FormLabel :label-for="labelFor || field.uniqueKey" :class="{ 'mb-2': shouldShowHelpText, flex: true }">
             {{ fieldLabel }}
             <span v-if="field.required" class="text-red-500 text-sm">
               {{ __('*') }}
@@ -50,7 +50,7 @@ export default {
 
   mounted() {
     // If field has a size, this allows to use flex on card
-    if (this.hasSize) {
+    if (this.field.size) {
       this.$parent.$parent.$el.classList.add('flex-dom');
       this.$parent.$parent.$el.classList.add('flex-wrap');
       this.$parent.$parent.$el.classList.add('flex');
@@ -61,7 +61,9 @@ export default {
       }
     }
 
-    if (this.field.removeBottomBorder === true) {
+    if (this.field.removeBottomBorder) {
+      this.$el.children[0].classList.add('remove-bottom-border');
+    } else {
       this.$el.children[0].classList.remove('remove-bottom-border');
     }
   },
