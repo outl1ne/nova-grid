@@ -2,7 +2,7 @@
 
 namespace Outl1ne\NovaGrid;
 
-use Laravel\Nova\Nova;
+
 use Laravel\Nova\Tool;
 
 class NovaGrid extends Tool

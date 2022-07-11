@@ -2,6 +2,7 @@
 
 namespace Outl1ne\NovaGrid;
 
+use Laravel\Nova\Nova;
 use Laravel\Nova\Fields\Field;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Http\Requests\NovaRequest;
