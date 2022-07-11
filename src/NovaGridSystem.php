@@ -14,8 +14,6 @@ class NovaGrid extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-grid', __DIR__ . '/../dist/js/entry.js');
-        Nova::style('nova-grid', __DIR__ . '/../dist/css/entry.css');
     }
 
     public function menu()
