@@ -64,16 +64,16 @@ export default {
   },
 
   mounted() {
-    if (!!this.field.size) {
-      this.$parent.$parent.$el.classList.add('flex-wrap');
-      this.$parent.$parent.$el.classList.add('flex');
-    }
-
-    if (this.field.removeBottomBorder) {
-      this.$el.children[0].classList.add('remove-bottom-border');
-    } else {
-      this.$el.children[0].classList.remove('remove-bottom-border');
-    }
+    // if (this.field.size) {
+    //   this.$parent.$parent.$el.classList.add('flex-wrap');
+    //   this.$parent.$parent.$el.classList.add('flex');
+    //   console.info(this.$parent.$parent.$el);
+    // }
+    // if (this.field.removeBottomBorder) {
+    //   this.$el.children[0].classList.add('remove-bottom-border');
+    // } else {
+    //   this.$el.children[0].classList.remove('remove-bottom-border');
+    // }
   },
 
   methods: {
