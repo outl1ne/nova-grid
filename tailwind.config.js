@@ -1,10 +1,6 @@
-const path = require('path');
-
 module.exports = {
-  content: [path.resolve(__dirname, 'resources/**/*.{vue,js,ts,jsx,tsx,scss}')],
   darkMode: 'class',
   safelist: [
-    'w-full',
     'w-1/2',
     'w-1/3',
     'w-2/3',
@@ -31,5 +27,6 @@ module.exports = {
     'w-9/12',
     'w-10/12',
     'w-11/12',
+    'flex-wrap',
   ],
 };
