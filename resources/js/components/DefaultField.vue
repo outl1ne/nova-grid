@@ -15,6 +15,7 @@
       class="mt-1 md:mt-0"
       :class="{
         'md:w-4/5': fullWidthContent,
+        'o1-px-8 o1-mt-2': field.stacked,
         'w-full': !field.stacked,
         'w-full py-2 px-1': field.size,
         'w-full md:w-3/5 md:py-5': !field.size && !field.stacked,
@@ -94,7 +95,7 @@ export default {
     },
 
     fieldWrapperClasses() {
-      if (this.hasSize) return 'compact-nova-field-wrapper';
+      if (this.hasSize) return 'nova-grid--field-wrapper';
       if (this.field.stacked) return 'flex w-full flex-col';
       return 'flex w-full';
     },
@@ -133,20 +134,10 @@ export default {
   }
 }
 
-.compact-nova-field-wrapper {
+.nova-grid--field-wrapper {
   display: flex;
   flex-wrap: wrap;
   padding: 0.5rem 1rem;
-}
-
-.translatable-field {
-  position: relative;
-
-  > .nova-translatable-locale-tabs {
-    position: absolute;
-    top: 4px;
-    right: 0px;
-  }
 }
 
 .field-wrapper:last-child {

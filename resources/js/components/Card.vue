@@ -20,5 +20,15 @@ form .nova-grid--card {
   > *:last-child .field-wrapper {
     border-style: none;
   }
+
+  .translatable-field {
+    position: relative;
+
+    > .nova-translatable-locale-tabs {
+      position: absolute;
+      top: 6px;
+      right: 0px;
+    }
+  }
 }
 </style>
