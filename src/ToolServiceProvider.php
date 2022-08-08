@@ -23,7 +23,9 @@ class ToolServiceProvider extends ServiceProvider
         Field::macro('sizeTwoThirds', fn () => $this->size('w-2/3'));
         Field::macro('removeBottomBorder', fn () =>  $this->withMeta(['removeBottomBorder' => true]));
 
-        Nova::script('nova-grid', __DIR__ . '/../dist/js/entry.js');
-        Nova::style('nova-grid', __DIR__ . '/../dist/css/entry.css');
+        Nova::serving(function () {
+            Nova::script('nova-grid', __DIR__ . '/../dist/js/entry.js');
+            Nova::style('nova-grid', __DIR__ . '/../dist/css/entry.css');
+        });
     }
 }
