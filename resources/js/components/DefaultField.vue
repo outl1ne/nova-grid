@@ -58,7 +58,7 @@ export default {
   methods: {
     getParentElement: function (el) {
       let currentEl = el.$el;
-      while (true) {
+      while (currentEl) {
         const parentNode = currentEl.parentNode;
 
         // Reached end of document
