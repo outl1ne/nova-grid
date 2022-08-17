@@ -48,14 +48,26 @@ export default {
   },
 
   mounted() {
-    const parentElement = this.getParentElement(this);
+    this.applyParentElClasses();
+  },
 
-    if (parentElement && parentElement.classList) {
-      parentElement.classList.add(...this.fieldSizeClasses);
-    }
+  watch: {
+    'field.visible'(newValue, oldValue) {
+      this.$nextTick(() => {
+        if (newValue === true && oldValue === false) this.applyParentElClasses();
+      });
+    },
   },
 
   methods: {
+    applyParentElClasses() {
+      const parentElement = this.getParentElement(this);
+
+      if (parentElement && parentElement.classList) {
+        parentElement.classList.add(...this.fieldSizeClasses);
+      }
+    },
+
     getParentElement: function (el) {
       let currentEl = el.$el;
       while (currentEl) {
