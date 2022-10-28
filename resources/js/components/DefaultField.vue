@@ -15,7 +15,7 @@
       class="mt-1 md:mt-0"
       :class="{
         'md:w-4/5': fullWidthContent,
-        'o1-px-8 o1-mt-2': field.stacked,
+        'px-8 mt-2': field.stacked,
         'w-full': !field.stacked,
         'w-full py-2 px-1': field.size,
         'w-full md:w-3/5 md:py-5': !field.size && !field.stacked,
