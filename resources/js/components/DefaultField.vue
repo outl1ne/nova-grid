@@ -1,9 +1,15 @@
 <template>
-  <FieldWrapper :stacked="field.stacked" v-if="field.visible" :class="fieldWrapperClasses">
-    <div :class="fieldLabelClasses">
+  <div v-if="field.visible" :class="fieldWrapperClasses">
+    <div v-if="field.withLabel" :class="labelClasses">
       <slot>
-        <FormLabel :label-for="labelFor || field.uniqueKey" :class="{ 'mb-2': shouldShowHelpText, flex: true }">
-          {{ fieldLabel }}
+        <FormLabel
+          :label-for="labelFor || field.uniqueKey"
+          class="space-x-1"
+          :class="{ 'mb-2': shouldShowHelpText, flex: true }"
+        >
+          <span>
+            {{ fieldLabel }}
+          </span>
           <span v-if="field.required" class="text-red-500 text-sm">
             {{ __('*') }}
           </span>
@@ -11,29 +17,20 @@
       </slot>
     </div>
 
-    <div
-      class="mt-1 md:mt-0"
-      :class="{
-        'md:w-4/5': fullWidthContent,
-        'px-8 mt-2': field.stacked,
-        'w-full': !field.stacked,
-        'w-full py-2 px-1': field.size,
-        'w-full md:w-3/5 md:py-5': !field.size && !field.stacked,
-      }"
-    >
+    <div :class="controlWrapperClasses">
       <slot name="field" />
 
-      <HelpText class="mt-2 help-text-error" v-if="showErrors && hasError">
+      <HelpText class="help-text-error" v-if="showErrors && hasError">
         {{ firstError }}
       </HelpText>
 
-      <HelpText class="help-text mt-2" v-if="shouldShowHelpText" v-html="field.helpText" />
+      <HelpText class="help-text" v-if="shouldShowHelpText" v-html="field.helpText" />
     </div>
-  </FieldWrapper>
+  </div>
 </template>
 
 <script>
-import { HandlesValidationErrors, mapProps } from 'laravel-nova';
+import { HandlesValidationErrors, mapProps } from '@/mixins';
 
 export default {
   mixins: [HandlesValidationErrors],
@@ -86,8 +83,41 @@ export default {
   },
 
   computed: {
-    fieldClasses() {
-      return this.fullWidthContent ? (this.field.stacked ? 'w-full' : 'w-4/5') : this.hasSize ? 'w-full' : 'w-1/2';
+    fieldWrapperClasses() {
+      // prettier-ignore
+      return [
+        'md:flex-row space-y-2 md:space-y-0',
+        this.field.withLabel && !this.field.inline && !this.field.compact && 'py-4',
+        this.field.withLabel && !this.field.inline && this.field.compact && 'py-4',
+        this.field.stacked && 'md:flex-col md:space-y-2',
+        this.hasSize && 'nova-grid--field-wrapper',
+        'flex w-full',
+      ]
+    },
+
+    labelClasses() {
+      // prettier-ignore
+      return [
+        '!px-3 md:!px-6',
+        this.hasSize ? 'w-full' : 'w-1/5',
+        this.field.stacked && '',
+        this.field.stacked && !this.field.inline && 'px-6 md:px-8',
+        !this.field.stacked && !this.field.inline && 'px-6 md:px-8',
+        this.hasSize && 'compact-nova-field-label',
+      ]
+    },
+
+    controlWrapperClasses() {
+      // prettier-ignore
+      return [
+        'w-full space-y-2 !px-3 md:!px-4',
+        this.field.stacked && !this.field.inline && '',
+        !this.field.stacked && !this.field.inline && 'px-6 md:px-8',
+        !this.field.stacked && !this.field.inline && !this.field.fullWidth && !this.field.size && 'md:w-3/5',
+        this.field.stacked && !this.field.inline && !this.field.fullWidth && !this.field.size && 'md:w-3/5',
+        !this.field.stacked && !this.field.inline && this.field.fullWidth && !this.field.size && 'md:w-4/5',
+        this.field.size && 'w-full py-2 px-1',
+      ]
     },
 
     /**
@@ -102,37 +132,20 @@ export default {
       return this.fieldName || this.field.name || this.field.singularLabel;
     },
 
-    hasSize() {
-      return this.field.size !== undefined;
-    },
-
-    fieldWrapperClasses() {
-      if (this.hasSize) return 'nova-grid--field-wrapper';
-      if (this.field.stacked) return 'flex w-full flex-col';
-      return 'flex w-full';
-    },
-
-    fieldLabelClasses() {
-      if (this.hasSize) return 'compact-nova-field-label';
-      if (this.field.stacked) return 'w-1/5 px-8 pt-2';
-      return 'w-1/5 py-6 px-8';
-    },
-
-    fieldValueClasses() {
-      if (this.hasSize) return 'w-full';
-      return this.fullWidthContent ? (this.field.stacked ? 'w-full py-6 px-8' : 'w-4/5 py-6 px-8') : 'w-1/2 py-6 px-8';
-    },
-
-    fieldSizeClasses() {
-      if (!this.field.size) return ['w-full'];
-      return [this.field.size, 'border-r', 'border-gray-100', 'dark:border-gray-700', 'self-end'];
-    },
-
     /**
      * Determine help text should be shown.
      */
     shouldShowHelpText() {
       return this.showHelpText && this.field.helpText?.length > 0;
+    },
+
+    hasSize() {
+      return this.field.size !== undefined;
+    },
+
+    fieldSizeClasses() {
+      if (!this.field.size) return ['w-full'];
+      return [this.field.size, 'border-r', 'border-gray-100', 'dark:border-gray-700', 'self-end'];
     },
   },
 };
@@ -149,7 +162,6 @@ export default {
 .nova-grid--field-wrapper {
   display: flex;
   flex-wrap: wrap;
-  padding: 0.5rem 1rem;
 }
 
 .field-wrapper:last-child {

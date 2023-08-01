@@ -13,6 +13,7 @@
     "axios": "^0.27.2",
     "cross-env": "^7.0.3",
     "form-backend-validation": "^2.4.0",
+    "inflector-js": "^1.0.1",
     "laravel-mix": "^6.0.49",
     "postcss": "^8.4.16",
     "postcss-import": "^14.1.0",
