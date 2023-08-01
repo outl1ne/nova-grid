@@ -99,7 +99,7 @@ export default {
       // prettier-ignore
       return [
         '!px-3 md:!px-6',
-        this.hasSize ? 'w-full' : 'w-1/5',
+        this.hasSize ? 'w-full' : this.field.stacked ? 'w-full' : 'w-1/5',
         this.field.stacked && '',
         this.field.stacked && !this.field.inline && 'px-6 md:px-8',
         !this.field.stacked && !this.field.inline && 'px-6 md:px-8',
